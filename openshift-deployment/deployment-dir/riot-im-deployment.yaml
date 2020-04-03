@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: riot-im
+  name: riot-im
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: riot-im
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.21.0 (992df58d8)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: riot-im
+    spec:
+      containers:
+      - image: docker-registry.default.svc:5000/pajak-riot/pajak-riot-im
+        name: riot-im
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - mountPath: /certs
+          name: riot-data
+      restartPolicy: Always
+      serviceAccountName: useroot
+      volumes:
+      - name: riot-data
+        persistentVolumeClaim:
+          claimName: claim-riot

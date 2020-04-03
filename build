@@ -1,0 +1,10 @@
+#!/bin/bash
+HOSTNAME=aio.ocp.i3dc.com
+
+#docker build -t pajak/matrix-postgres matrix-postgres-docker/
+
+#docker build --build-arg SERVER_NAME=coturn -t pajak/coturn coturn-docker/
+
+#docker build --build-arg SERVER_NAME=riot --build-arg DEFAULT_HS_HOSTNAME=synapse --build-arg RIOT_VERSION=v1.5.15 -t pajak/riot.im riot-web-docker/
+
+docker build --build-arg SERVER_NAME=synapse --build-arg SYNAPSE_VERSION=v1.12.1rc1 -t  pajak/matrix-synapse matrix-synapse-docker/

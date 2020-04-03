@@ -1,0 +1,13 @@
+#!/bin/bash
+loc=pv-dir
+for i in $(ls $loc/ | grep pv.yaml)
+do
+  oc apply -f $loc/$i
+done
+
+for i in $(ls $loc/ | grep pvc.yaml)
+do
+  oc apply -f $loc/$i
+done
+
+

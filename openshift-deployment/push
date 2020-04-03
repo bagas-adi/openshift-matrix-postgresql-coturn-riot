@@ -1,0 +1,10 @@
+#!/bin/bash
+DOCKER_REGISTRY=registry.private.i3dc.com:5000
+PROJECT_NAME=pajak-riot
+OCP_REGISTRY=docker-registry.default.svc:5000/$PROJECT_NAME
+
+docker tag ${1} $DOCKER_REGISTRY/${1}
+docker push $DOCKER_REGISTRY/${1}
+oc import-image ${2} --from=$DOCKER_REGISTRY/${1} --confirm --insecure
+docker tag ${1} $OCP_REGISTRY/${2}
+docker push $OCP_REGISTRY/${2} 

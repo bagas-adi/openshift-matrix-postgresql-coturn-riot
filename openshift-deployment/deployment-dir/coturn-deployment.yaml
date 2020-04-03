@@ -1,0 +1,94 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: coturn
+  name: coturn
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: coturn
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.21.0 (992df58d8)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: coturn
+    spec:
+      containers:
+      - image: docker-registry.default.svc:5000/pajak-riot/pajak-coturn
+        name: coturn
+        ports:
+        - containerPort: 3479
+          protocol: UDP
+        - containerPort: 3478
+          protocol: UDP
+        - containerPort: 5439
+          protocol: UDP
+
+        - containerPort: 60000
+          protocol: UDP
+
+        - containerPort: 60001
+          protocol: UDP
+
+        - containerPort: 60002
+          protocol: UDP
+
+        - containerPort: 60003
+          protocol: UDP
+
+        - containerPort: 60004
+          protocol: UDP
+
+        - containerPort: 60005
+          protocol: UDP
+
+        - containerPort: 60006
+          protocol: UDP
+
+        - containerPort: 60007
+          protocol: UDP
+
+        - containerPort: 60008
+          protocol: UDP
+
+        - containerPort: 60009
+          protocol: UDP
+
+        - containerPort: 60010
+          protocol: UDP
+
+        - containerPort: 60011
+          protocol: UDP
+
+        - containerPort: 60012
+          protocol: UDP
+
+        - containerPort: 60013
+          protocol: UDP
+
+        - containerPort: 60014
+          protocol: UDP
+
+        - containerPort: 60015
+          protocol: UDP
+
+        volumeMounts:
+        - mountPath: /data
+          name: coturn-data
+      restartPolicy: Always
+      serviceAccountName: useroot
+      volumes:
+      - name: coturn-data
+        persistentVolumeClaim:
+          claimName: claim-coturn
