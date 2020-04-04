@@ -83,12 +83,12 @@ spec:
         - containerPort: 60015
           protocol: UDP
 
-        volumeMounts:
-        - mountPath: /data
-          name: coturn-data
+#        volumeMounts:
+#        - mountPath: /data
+#          name: coturn-data
       restartPolicy: Always
       serviceAccountName: useroot
-      volumes:
-      - name: coturn-data
-        persistentVolumeClaim:
-          claimName: claim-coturn
+#      volumes:
+#      - name: coturn-data
+#        persistentVolumeClaim:
+#          claimName: claim-coturn

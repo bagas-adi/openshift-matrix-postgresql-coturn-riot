@@ -2,7 +2,9 @@ FROM alpine:3.7
 
 # coturn dependencies
 ENV REAL_DEPS="sqlite libevent libressl"
-ENV BUILD_DEPS="git shadow pwgen g++ make sqlite-dev libevent-dev libressl-dev linux-headers"
+#ENV BUILD_DEPS="git shadow pwgen g++ make sqlite-dev libevent-dev libressl-dev linux-headers"
+ENV BUILD_DEPS="git shadow pwgen g++ make sqlite-dev libevent-dev libressl-dev linux-headers postgresql-client libpq postgresql-dev"
+#ENV BUILD_DEPS="build-essential git debhelper dpkg-dev libssl-dev libevent-dev sqlite3 libsqlite3-dev postgresql-client libpq-dev default-mysql-client default-libmysqlclient-dev libhiredis-dev libmongoc-dev libbson-dev"
 RUN apk update && apk add $REAL_DEPS $BUILD_DEPS
 
 # get the latest (as yet) release
