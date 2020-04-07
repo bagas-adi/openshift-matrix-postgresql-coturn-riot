@@ -4,6 +4,7 @@ services:
     image: pajak/matrix-synapse
     ports:
      - "8448:8448"
+     - "8008:8008"
     volumes:
      - "synapse-data:/data:rw"
      - "synapse-data:/media_store:rw"

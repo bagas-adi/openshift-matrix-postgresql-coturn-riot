@@ -30,17 +30,17 @@ spec:
         ports:
         - containerPort: 8448
         resources: {}
-        volumeMounts:
-        - mountPath: /media_store
-          name: synapse-data2
-        - mountPath: /uploads
-          name: synapse-data3
+#        volumeMounts:
+#        - mountPath: /media_store
+#          name: synapse-data2
+#        - mountPath: /uploads
+#          name: synapse-data3
       restartPolicy: Always
       serviceAccountName: useroot
-      volumes:
-      - name: synapse-data2
-        persistentVolumeClaim:
-          claimName: claim-synapse2
-      - name: synapse-data3
-        persistentVolumeClaim:
-          claimName: claim-synapse3
+#      volumes:
+#      - name: synapse-data2
+#        persistentVolumeClaim:
+#          claimName: claim-synapse2
+#      - name: synapse-data3
+#        persistentVolumeClaim:
+#          claimName: claim-synapse3

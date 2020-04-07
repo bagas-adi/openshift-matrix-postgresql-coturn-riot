@@ -10,9 +10,15 @@ metadata:
   name: synapse
 spec:
   ports:
-  - name: "8448"
-    port: 8448
-    targetPort: 8448
+  - name: 8008-tcp
+    port: 8008
+    protocol: TCP
+    targetPort: 8008
+  - name: 8008-udp
+    port: 8008
+    protocol: UDP
+    targetPort: 8008
+
   selector:
     io.kompose.service: synapse
 status:

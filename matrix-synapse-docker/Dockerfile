@@ -45,4 +45,5 @@ USER $SYNAPSE_USERNAME:$SYNAPSE_GROUPNAME
 # this is a shell form entrypoint to enable var expansion
 ENTRYPOINT exec python3 -m synapse.app.homeserver -c $DATA_DIR/$CONFIG_FILE
 EXPOSE 8448
+EXPOSE 8008
 VOLUME ["$DATA_DIR", "/media_store", "/uploads"]

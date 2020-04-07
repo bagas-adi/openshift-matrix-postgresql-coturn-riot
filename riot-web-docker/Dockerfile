@@ -31,7 +31,7 @@ RUN openssl req -newkey rsa:4096 -new -nodes -x509 -days 3650 -keyout $CERT_DIR/
 
 ARG RIOT_USERNAME=matrix-riot-web
 ARG RIOT_GROUPNAME=matrix-riot-web
-ARG DEFAULT_HS_HOSTNAME=matrix.org
+ARG DEFAULT_HS_HOSTNAME
 ARG DEFAULT_HS_PORT=8448
 # create the unprivileged user and group matrix-synapse
 RUN /build/ensure_user_and_group.sh $RIOT_USERNAME $RIOT_GROUPNAME

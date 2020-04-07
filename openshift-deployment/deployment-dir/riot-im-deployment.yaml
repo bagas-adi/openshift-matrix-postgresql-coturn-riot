@@ -25,7 +25,7 @@ spec:
         io.kompose.service: riot-im
     spec:
       containers:
-      - image: docker-registry.default.svc:5000/pajak-riot/pajak-riot-im
+      - image: docker-registry.default.svc:5000/pajak-riot/pajak-riot-web
         name: riot-im
         ports:
         - containerPort: 80
