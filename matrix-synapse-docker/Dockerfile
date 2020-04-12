@@ -32,6 +32,7 @@ ARG CONFIG_FILE="synapse.config.yaml"
 ARG REPORT_STATS="no"
 # create initial config file
 RUN /build/generate_config.sh $SERVER_NAME $DATA_DIR/$CONFIG_FILE $REPORT_STATS
+COPY $CONFIG_FILE $DATA_DIR/$CONFIG_FILE
 # configure log files to be in the /data folder
 RUN /build/alter_config.sh $DATA_DIR $CONFIG_FILE $SERVER_NAME
 
