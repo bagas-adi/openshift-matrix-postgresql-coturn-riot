@@ -1,47 +1,23 @@
-FROM alpine:3.9
+FROM nginx:alpine
 
-# this arg here ensures the dependencies are updated along with riot itself
-ARG RIOT_VERSION
-
-RUN apk update && apk add shadow openssl gnupg apache2
-
-ENV DOWNLOAD_DIR="/download"
-ENV WEBAPP_DIR="/var/www/localhost/htdocs/riot-web"
-
-# setup "build" envirionment
-# get some scripts
-RUN mkdir /build
-COPY scripts/ensure_user_and_group.sh /build/ensure_user_and_group.sh
-COPY scripts/alter_config.sh /build/alter_config.sh
-COPY scripts/install.sh /build/install.sh
-
-# fetch, verify and install riot.im
-RUN /build/install.sh $DOWNLOAD_DIR $WEBAPP_DIR $RIOT_VERSION
-
-# patch pamd permissions for chpasswd (https://bugs.alpinelinux.org/issues/10209)
-COPY scripts/patch_pamd_chpasswd /etc/pam.d/chpasswd
-
-# certificate handling
-ENV CERT_NAME=riot-web-app-cert.pem
-ENV KEY_NAME=riot-web-app-key.pem
-ENV CERT_DIR="/certs"
-ARG SERVER_NAME
-RUN mkdir $CERT_DIR
-RUN openssl req -newkey rsa:4096 -new -nodes -x509 -days 3650 -keyout $CERT_DIR/$CERT_NAME -out $CERT_DIR/$CERT_NAME -subj "/C=FR/ST=BarbedLand/O=BarbedGroup/CN=$SERVER_NAME"
-
-ARG RIOT_USERNAME=matrix-riot-web
-ARG RIOT_GROUPNAME=matrix-riot-web
-ARG DEFAULT_HS_HOSTNAME
-ARG DEFAULT_HS_PORT=8448
-# create the unprivileged user and group matrix-synapse
-RUN /build/ensure_user_and_group.sh $RIOT_USERNAME $RIOT_GROUPNAME
-RUN chmod o+r $WEBAPP_DIR
-
-# change some config points
-RUN /build/alter_config.sh $WEBAPP_DIR $DEFAULT_HS_HOSTNAME $DEFAULT_HS_PORT
-
-#USER $RIOT_USERNAME:$RIOT_GROUPNAME
-USER root
-ENTRYPOINT exec httpd -D FOREGROUND -E $CERT_DIR/$CERT_NAME -d $WEBAPP_DIR
-EXPOSE 80
-VOLUME ["$CERT_DIR"]
+ARG version=v1.5.15
+ARG GPG_KEY=5EA7E0F70461A3BCBEBE4D5EF6151806032026F9
+RUN if [ -z "$version" ]; then echo >&2 "error: build argument 'version' is required" && exit 1; fi &&\
+    apk add --no-cache --virtual .build-deps curl gnupg &&\
+    curl -sSL https://github.com/vector-im/riot-web/releases/download/${version}/riot-${version}.tar.gz -o riot-web.tar.gz &&\
+	  curl -sSL https://github.com/vector-im/riot-web/releases/download/${version}/riot-${version}.tar.gz.asc -o riot-web.tar.gz.asc &&\
+    for server in \
+			hkp://keyserver.ubuntu.com:80 \
+			hkp://p80.pool.sks-keyservers.net:80 \
+			ha.pool.sks-keyservers.net \
+		; do \
+			echo "Fetching GPG key $GPG_KEY from $server"; \
+			gpg --keyserver "$server" --keyserver-options timeout=10 --recv-keys "$GPG_KEY" && break; \
+		done &&\ 
+    gpg --batch --verify riot-web.tar.gz.asc riot-web.tar.gz &&\
+	  tar -xzf riot-web.tar.gz &&\
+	  mv riot-${version} /etc/riot-web &&\
+	  cp /etc/riot-web/config.sample.json /etc/riot-web/config.json &&\
+	  rm -rf /usr/share/nginx/html && ln -s /etc/riot-web /usr/share/nginx/html &&\
+	  rm riot-web.tar.gz* &&\
+	  apk del .build-deps
