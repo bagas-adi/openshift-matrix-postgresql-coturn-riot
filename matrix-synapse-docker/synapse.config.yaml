@@ -840,11 +840,11 @@ media_store_path: "/media_store"
 
 # The public URIs of the TURN server to give to clients
 #
-#turn_uris: []
+turn_uris: ["turn:coturn:3478?transport=udp","turn:coturn:3478?transport=tcp"]
 
 # The shared secret used to compute passwords for the TURN server
 #
-#turn_shared_secret: "YOUR_SHARED_SECRET"
+turn_shared_secret: twjCu1WmuVmX4nnBilo9zDcHptuhHiVRKIIoomz8x6MGIEh6VC8cpDSw0Ps0GJum
 
 # The Username and password if the TURN server needs them and
 # does not use a token
@@ -854,7 +854,7 @@ media_store_path: "/media_store"
 
 # How long generated TURN credentials last
 #
-#turn_user_lifetime: 1h
+turn_user_lifetime: 86400000
 
 # Whether guests should be allowed to use the TURN server.
 # This defaults to True, otherwise VoIP will be unreliable for guests.
@@ -862,7 +862,7 @@ media_store_path: "/media_store"
 # connect to arbitrary endpoints without having first signed up for a
 # valid account (e.g. by passing a CAPTCHA).
 #
-#turn_allow_guests: true
+turn_allow_guests: true
 
 
 ## Registration ##

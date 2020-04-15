@@ -21,6 +21,14 @@ touch $DATA_DIR/$CONFIG_FILE
 
 # fill in the config file
 echo "lt-cred-mech" > "$DATA_DIR/$CONFIG_FILE"
+echo "syslog" >> "$DATA_DIR/$CONFIG_FILE"
+echo "verbose" >> "$DATA_DIR/$CONFIG_FILE"
+echo "listening-port=3478" >> "$DATA_DIR/$CONFIG_FILE"
+echo "tls-listening-port=5349">> "$DATA_DIR/$CONFIG_FILE"
+echo "external-ip=202.158.13.157" >> "$DATA_DIR/$CONFIG_FILE"
+echo "cli-ip=127.0.0.1" >> "$DATA_DIR/$CONFIG_FILE"
+echo "cli-port=5766" >> "$DATA_DIR/$CONFIG_FILE"
+echo "cli-password=qwerty" >> "$DATA_DIR/$CONFIG_FILE"
 echo "use-auth-secret" >> "$DATA_DIR/$CONFIG_FILE"
 echo "static-auth-secret=${secret}" >> "$DATA_DIR/$CONFIG_FILE"
 echo "realm=${SERVER_NAME}" >> "$DATA_DIR/$CONFIG_FILE"

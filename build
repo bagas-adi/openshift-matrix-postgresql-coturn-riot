@@ -1,9 +1,10 @@
 #!/bin/bash
 
-docker build -t pajak/matrix-postgres matrix-postgres-docker/
+#docker build -t pajak/matrix-postgres matrix-postgres-docker/
 
-docker build --build-arg SERVER_NAME=coturn -t pajak/coturn coturn-docker/
+#docker build --build-arg SERVER_NAME=coturn -t pajak/coturn coturn-docker/
 
-docker build -t pajak/riot-web --build-arg version=v1.5.15 riot-web-docker/
+#docker build -t pajak/riot-web --build-arg version=v1.5.15 riot-web-docker/
 
+#docker build --build-arg SERVER_NAME=synapse-pajak-riot.apps.ocp.i3dc.com --build-arg SYNAPSE_VERSION=v1.12.1rc1 -t  pajak/synapse-base matrix-synapse-docker/synapse-base/
 docker build --build-arg SERVER_NAME=synapse-pajak-riot.apps.ocp.i3dc.com --build-arg SYNAPSE_VERSION=v1.12.1rc1 -t  pajak/matrix-synapse matrix-synapse-docker/
